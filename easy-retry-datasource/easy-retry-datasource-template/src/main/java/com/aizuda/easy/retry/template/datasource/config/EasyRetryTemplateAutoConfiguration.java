@@ -68,6 +68,9 @@ public class EasyRetryTemplateAutoConfiguration {
     public DynamicTableNameInnerInterceptor dynamicTableNameInnerInterceptor(String tablePrefix) {
         DynamicTableNameInnerInterceptor dynamicTableNameInnerInterceptor = new DynamicTableNameInnerInterceptor();
         dynamicTableNameInnerInterceptor.setTableNameHandler((sql, tableName) -> {
+            if (tableName.startsWith(tablePrefix)) {
+                System.out.println(tableName);
+            }
             if (TABLES.contains(tableName)) {
                 Integer partition = RequestDataHelper.getPartition();
                 RequestDataHelper.remove();
